@@ -1,0 +1,2 @@
+# Create_WSL_Python_VirtualEnv
+Create_WSL_Python3.10_VirtualEnv_.venv
