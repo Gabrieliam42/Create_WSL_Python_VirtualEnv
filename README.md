@@ -1,8 +1,8 @@
 # Create_Linux_Python_Virtual_Environment
 
 Prerequisites:
-`Python`
-`venv`
+- `Python`
+- `venv`
 
 So you need to install venv for every version of Python you have installed. You can do this with the following commands:
 
