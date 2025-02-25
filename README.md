@@ -14,7 +14,7 @@ So you need to install venv for every version of Python you have installed. You 
 With this script you can create a Linux Python Environment inside WSL, WSL2 terminal or Bash.
 
 * In Windows you can run "Run_WSL_Python_Script.exe" and select "Create_WSL_Python3.10_VirtualEnv_.venv.py".
-* 
+
 * You can do this by running the WSL terminal or Bash and by using the following command:
 ###### python3 Create_WSL_Python3.10_VirtualEnv_.venv.py
 * Or in cmd by using the command:
