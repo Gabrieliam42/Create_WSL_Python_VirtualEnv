@@ -16,7 +16,8 @@ With this script you can create a Linux Python Environment inside WSL, WSL2 term
 * In Windows you can run "Run_WSL_Python_Script.exe" and select "Create_WSL_Python3.10_VirtualEnv_.venv.py".
 * You can do this by running the WSL terminal or Bash and by using the following command:
 ###### python3 Create_WSL_Python3.10_VirtualEnv_.venv.py
-* Or in cmd by using the command `wsl python3 Create_WSL_Python3.10_VirtualEnv_.venv.py`
+* Or in cmd by using the command:
+- `wsl python3 Create_WSL_Python3.10_VirtualEnv_.venv.py`
 
 This creates a Linux Python Virtual Environment named .venv and also activates it, so you can immediately install Python libraries inside the environment.
 
