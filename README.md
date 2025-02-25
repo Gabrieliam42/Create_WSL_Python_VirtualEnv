@@ -1,4 +1,4 @@
-# Create_Linux_Python_Virtual_Environment
+# Create a Linux Python Virtual Environment
 
 Prerequisites:
 - `Python`
