@@ -6,10 +6,10 @@ Prerequisites:
 
 So you need to install venv for every version of Python you have installed. You can do this with the following commands:
 
-`sudo apt-get install python3.10-venv`
-`sudo apt-get install python3.11-venv`
-`sudo apt-get install python3.12-venv`
-`sudo apt-get install python3.13-venv`
+- `sudo apt-get install python3.10-venv`
+- `sudo apt-get install python3.11-venv`
+- `sudo apt-get install python3.12-venv`
+- `sudo apt-get install python3.13-venv`
 
 With this script you can create a Linux Python Environment inside WSL, WSL2 terminal or Bash.
 
