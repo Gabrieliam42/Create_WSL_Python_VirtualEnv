@@ -18,7 +18,8 @@ With the "Create_WSL_Python3.11_VirtualEnv_.venv.py" script you can create a Lin
 #### You can do this by running the WSL terminal or Bash and by using the following command:
 ###### python3 Create_WSL_Python3.11_VirtualEnv_.venv.py
 * Or in cmd by using the command:
-- `wsl python3 Create_WSL_Python3.10_VirtualEnv_.venv.py`
+
+`wsl python3 Create_WSL_Python3.10_VirtualEnv_.venv.py`
 
 This creates a Linux Python Virtual Environment named .venv and also activates it, so you can immediately install Python libraries inside the environment.
 
