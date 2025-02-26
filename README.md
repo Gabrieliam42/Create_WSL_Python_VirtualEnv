@@ -4,7 +4,7 @@ Prerequisites:
 - `Python`
 - `venv`
 
-So you need to install venv for every version of Python you have installed. You can do this with the following commands:
+So you need to install venv for every version of Python you have installed. You can do this with one or multiple of the following commands:
 
 - `sudo apt-get install python3.10-venv`
 - `sudo apt-get install python3.11-venv`
