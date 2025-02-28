@@ -39,5 +39,6 @@ This creates a Linux Python Virtual Environment named .venv and also activates i
 
 
 
+
 **Script Developer:** Gabriel Mihai Sandu  
 **GitHub Profile:** [https://github.com/Gabrieliam42](https://github.com/Gabrieliam42)
