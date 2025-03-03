@@ -13,16 +13,17 @@ def is_wsl():
         return False
 
 def create_virtualenv():
-    cwd = os.getcwd()
-    venv_path = os.path.join(cwd, ".venv")
+    # Use the Linux native home directory
+    home_dir = os.path.expanduser("~")
+    venv_path = os.path.join(home_dir, ".venv")
     
-    # Modified command to include --system-site-packages
-    command = f"python3.10 -m venv --system-site-packages {venv_path}"
+    # Modified command to use /usr/bin/python3.10 with --system-site-packages
+    command = f"/usr/bin/python3.10 -m venv --system-site-packages {venv_path}"
     
     try:
         print(f"Creating virtual environment at: {venv_path}")
         subprocess.run(command, shell=True, check=True)
-        print(f"Virtual environment '.venv' created successfully in {cwd}.")
+        print("Virtual environment '.venv' created successfully.")
         
         print("\nThe virtual environment is activated!")
         shell = os.environ.get("SHELL", "/bin/bash")
