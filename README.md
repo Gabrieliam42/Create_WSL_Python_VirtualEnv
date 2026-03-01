@@ -4,22 +4,17 @@ Prerequisites:
 - `Python`
 - `venv`
 
-You need to install `venv` for every version of Python you have installed. You can do this with one or multiple of the following commands:
+If you need to install `venv` for every version of Python you have installed. You can do this with one or multiple of the following commands:
 
 - `sudo apt-get install python3.10-venv`
 - `sudo apt-get install python3.11-venv`
 - `sudo apt-get install python3.12-venv`
 - `sudo apt-get install python3.13-venv`
 
-With the "Create_WSL_Python3.11_VirtualEnv_.venv.py" script you can create a Linux Python Environment inside WSL, WSL2 terminal or Bash.
+[Download Latest Releases (v1.0.0)](https://github.com/Gabrieliam42/Create_WSL_Python_VirtualEnv/releases/tag/1.0.0)
 
-* In Windows you can run "Run_WSL_Python_Script.exe" and select "Create_WSL_Python3.11_VirtualEnv_.venv.py".
+With 'Create_cwd_WSL_Python3.12_VirtualEnv_.venv.exe' you can create a Linux Python v3.12 Environment on Windows with WSL2 Ubuntu.
 
-#### You can do this by running the WSL terminal or Bash and by using the following command:
-###### python3 Create_WSL_Python3.11_VirtualEnv_.venv.py
-* Or in cmd by using the command:
-
-`wsl python3 Create_WSL_Python3.10_VirtualEnv_.venv.py`
 
 This creates a Linux Python Virtual Environment named .venv and also activates it, so you can immediately install Python libraries inside the environment.
 
