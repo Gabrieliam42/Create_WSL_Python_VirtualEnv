@@ -1,4 +1,4 @@
-# Create a Linux Python Virtual Environment
+# Create a WSL Python Virtual Environment
 
 Prerequisites:
 - `Python`
