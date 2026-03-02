@@ -58,14 +58,17 @@ def select_virtualenv(venvs):
 
 def drop_to_shell(venv_path):
     # Prepare a temporary rcfile that sources the venv activation script,
-    # echoes a message, and sets the prompt to display the venv name.
+    # echoes a message, and ensures the prompt keeps the venv prefix.
     activate_script = os.path.join(venv_path, "bin", "activate")
-    venv_name = os.path.basename(venv_path)
     with tempfile.NamedTemporaryFile(mode='w', delete=False) as tmp:
         tmp.write(f'source "{activate_script}"\n')
         tmp.write('echo "The virtual environment is activated!"\n')
-        # Set PS1 to include the virtual environment name (e.g., "(.venv)")
-        tmp.write(f'export PS1="({venv_name}) \\u@\\h:\\w\\$ "\n')
+        tmp.write('venv_prompt_fix=\'if [ -n "$VIRTUAL_ENV" ]; then _venv_name="$(basename "$VIRTUAL_ENV")"; case "$PS1" in ("($_venv_name) "*) ;; (*) PS1="($_venv_name) $PS1" ;; esac; fi\'\n')
+        tmp.write('if [ -n "${PROMPT_COMMAND:-}" ]; then\n')
+        tmp.write('    export PROMPT_COMMAND="$venv_prompt_fix; $PROMPT_COMMAND"\n')
+        tmp.write('else\n')
+        tmp.write('    export PROMPT_COMMAND="$venv_prompt_fix"\n')
+        tmp.write('fi\n')
         tmp_path = tmp.name
     print("\nDropping to an interactive shell. Type 'exit' to close the shell.")
     subprocess.run(["bash", "--rcfile", tmp_path, "-i"])
@@ -135,9 +138,13 @@ if [ ! -f "$activate_script" ]; then
     exit 1
 fi
 source "$activate_script"
-venv_name="$(basename "$selected_venv")"
 echo "The virtual environment is activated!"
-export PS1="(${venv_name}) \\u@\\h:\\w\\$ "
+venv_prompt_fix='if [ -n "$VIRTUAL_ENV" ]; then _venv_name="$(basename "$VIRTUAL_ENV")"; case "$PS1" in ("($_venv_name) "*) ;; (*) PS1="($_venv_name) $PS1" ;; esac; fi'
+if [ -n "${PROMPT_COMMAND:-}" ]; then
+    export PROMPT_COMMAND="$venv_prompt_fix; $PROMPT_COMMAND"
+else
+    export PROMPT_COMMAND="$venv_prompt_fix"
+fi
 exec bash -i
 """
 

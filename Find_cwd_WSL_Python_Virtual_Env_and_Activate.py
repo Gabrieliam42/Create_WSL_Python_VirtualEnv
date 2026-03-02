@@ -39,6 +39,9 @@ def find_activate_paths():
 
 
 def select_activate_path(activate_paths):
+    if len(activate_paths) == 1:
+        return activate_paths[0]
+
     print("Virtual environments found in the current directory tree:")
     for index, activate_path in enumerate(activate_paths, start=1):
         print(f"{index}. {activate_path}")
@@ -56,6 +59,13 @@ def drop_to_bash_with_activation(activate_path):
     bash_command = (
         f'ACTIVATE_PATH={shlex.quote(activate_path)}; '
         'source "$ACTIVATE_PATH"; '
+        'venv_prompt_fix=\'if [ -n "$VIRTUAL_ENV" ]; then _venv_name="$(basename "$VIRTUAL_ENV")"; '
+        'case "$PS1" in ("($_venv_name) "*) ;; (*) PS1="($_venv_name) $PS1" ;; esac; fi\'; '
+        'if [ -n "${PROMPT_COMMAND:-}" ]; then '
+        'export PROMPT_COMMAND="$venv_prompt_fix; $PROMPT_COMMAND"; '
+        'else '
+        'export PROMPT_COMMAND="$venv_prompt_fix"; '
+        'fi; '
         'echo "Activated virtual environment from: $ACTIVATE_PATH"; '
         'exec bash -i'
     )
@@ -126,19 +136,29 @@ if [ "${{#activate_paths[@]}}" -eq 0 ]; then
     read -r _
     exit 1
 fi
-echo "Virtual environments found in the current directory tree:"
-for i in "${{!activate_paths[@]}}"; do
-    printf "%d. %s\\n" "$((i + 1))" "${{activate_paths[$i]}}"
-done
-while true; do
-    read -rp "Select the number of the virtual environment you want to activate: " choice
-    if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${{#activate_paths[@]}} )); then
-        break
-    fi
-    echo "Invalid selection. Enter a number between 1 and ${{#activate_paths[@]}}."
-done
-selected_activate="${{activate_paths[$((choice - 1))]}}"
+if [ "${{#activate_paths[@]}}" -eq 1 ]; then
+    selected_activate="${{activate_paths[0]}}"
+else
+    echo "Virtual environments found in the current directory tree:"
+    for i in "${{!activate_paths[@]}}"; do
+        printf "%d. %s\\n" "$((i + 1))" "${{activate_paths[$i]}}"
+    done
+    while true; do
+        read -rp "Select the number of the virtual environment you want to activate: " choice
+        if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${{#activate_paths[@]}} )); then
+            break
+        fi
+        echo "Invalid selection. Enter a number between 1 and ${{#activate_paths[@]}}."
+    done
+    selected_activate="${{activate_paths[$((choice - 1))]}}"
+fi
 source "$selected_activate"
+venv_prompt_fix='if [ -n "$VIRTUAL_ENV" ]; then _venv_name="$(basename "$VIRTUAL_ENV")"; case "$PS1" in ("($_venv_name) "*) ;; (*) PS1="($_venv_name) $PS1" ;; esac; fi'
+if [ -n "${{PROMPT_COMMAND:-}}" ]; then
+    export PROMPT_COMMAND="$venv_prompt_fix; $PROMPT_COMMAND"
+else
+    export PROMPT_COMMAND="$venv_prompt_fix"
+fi
 echo "Activated virtual environment from: $selected_activate"
 exec bash -i
 """

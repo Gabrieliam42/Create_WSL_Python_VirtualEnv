@@ -34,6 +34,13 @@ def drop_to_bash_with_activation(activate_path):
         "exit 1; "
         "fi; "
         'source "$ACTIVATE_PATH"; '
+        'venv_prompt_fix=\'if [ -n "$VIRTUAL_ENV" ]; then _venv_name="$(basename "$VIRTUAL_ENV")"; '
+        'case "$PS1" in ("($_venv_name) "*) ;; (*) PS1="($_venv_name) $PS1" ;; esac; fi\'; '
+        'if [ -n "${PROMPT_COMMAND:-}" ]; then '
+        'export PROMPT_COMMAND="$venv_prompt_fix; $PROMPT_COMMAND"; '
+        'else '
+        'export PROMPT_COMMAND="$venv_prompt_fix"; '
+        'fi; '
         'echo "Activated virtual environment from: $ACTIVATE_PATH"; '
         "exec bash -i"
     )
@@ -107,6 +114,12 @@ if [ ! -f "$activate_path" ]; then
     exit 1
 fi
 source "$activate_path"
+venv_prompt_fix='if [ -n "$VIRTUAL_ENV" ]; then _venv_name="$(basename "$VIRTUAL_ENV")"; case "$PS1" in ("($_venv_name) "*) ;; (*) PS1="($_venv_name) $PS1" ;; esac; fi'
+if [ -n "${{PROMPT_COMMAND:-}}" ]; then
+    export PROMPT_COMMAND="$venv_prompt_fix; $PROMPT_COMMAND"
+else
+    export PROMPT_COMMAND="$venv_prompt_fix"
+fi
 echo "Virtual environment '.venv' created and activated in: $(pwd)"
 exec bash -i
 """
